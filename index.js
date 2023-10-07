@@ -28,11 +28,15 @@ async function run() {
     await client.connect();
     const database = client.db("UserProfile").collection("users");
 
-    app.get('/users',async(req,res) =>{
-
-        const result = await database.find().toArray()
-        res.send(result)
-    })
+    app.get('/users', async (req, res) => {
+      try {
+        const result = await database.find().toArray();
+        res.send(result);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+      }
+    });
     
 
 
