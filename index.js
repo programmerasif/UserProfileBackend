@@ -1,17 +1,16 @@
 const express = require('express');
 const app = express();
-const helmet = require('helmet');
 const cors = require('cors');
-require('dotenv').config()
+const helmet = require('helmet'); // Import helmet
+require('dotenv').config();
 const port = process.env.PORT || 5000;
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
-
 // middleware
-app.use(cors())
-app.use(express.json())
+app.use(cors());
+app.use(express.json());
 
-
+// Use the helmet middleware with CSP configuration
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
@@ -20,7 +19,6 @@ app.use(
     },
   })
 );
-
 
 var uri = "mongodb://UserProfileBackend:1NO9YpERNWxm85zl@ac-wotlaa2-shard-00-00.0rmdzda.mongodb.net:27017,ac-wotlaa2-shard-00-01.0rmdzda.mongodb.net:27017,ac-wotlaa2-shard-00-02.0rmdzda.mongodb.net:27017/?ssl=true&replicaSet=atlas-as340s-shard-0&authSource=admin&retryWrites=true&w=majority";
 
@@ -35,7 +33,7 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
+    // Connect the client to the server (optional starting in v4.7)
     await client.connect();
     const database = client.db("UserProfile").collection("users");
 
@@ -48,10 +46,6 @@ async function run() {
         res.status(500).json({ error: "Internal Server Error" });
       }
     });
-    
-
-
-   
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
@@ -61,12 +55,13 @@ async function run() {
     // await client.close();
   }
 }
+
 run().catch(console.dir);
 
-app.get('/',(req,res) =>{
-    res.send('Profile is updating ')
-})
+app.get('/', (req, res) => {
+  res.send('Profile is updating ');
+});
 
-app.listen(port, () =>{
-    console.log(`Profile is updating on ${port}`);
-})
+app.listen(port, () => {
+  console.log(`Profile is updating on ${port}`);
+});
