@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const helmet = require('helmet');
 const cors = require('cors');
 require('dotenv').config()
 const port = process.env.PORT || 5000;
@@ -9,11 +10,13 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 // middleware
 app.use(cors())
 app.use(express.json())
+
+
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
-      imgSrc: ["'self'", 'data:'], 
+      imgSrc: ["'self'", 'data:'],
     },
   })
 );
