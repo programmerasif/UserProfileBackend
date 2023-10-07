@@ -9,6 +9,14 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 // middleware
 app.use(cors())
 app.use(express.json())
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      imgSrc: ["'self'", 'data:'], 
+    },
+  })
+);
 
 
 var uri = "mongodb://UserProfileBackend:1NO9YpERNWxm85zl@ac-wotlaa2-shard-00-00.0rmdzda.mongodb.net:27017,ac-wotlaa2-shard-00-01.0rmdzda.mongodb.net:27017,ac-wotlaa2-shard-00-02.0rmdzda.mongodb.net:27017/?ssl=true&replicaSet=atlas-as340s-shard-0&authSource=admin&retryWrites=true&w=majority";
